@@ -673,13 +673,11 @@ function place(blockName)
 			robot.select(itemArray[blocki][1])
 		end
 	end
-	
 	if blockName == "ladder" then
 		if robot.place(3) == false then robot.place() end
 	else
 		if robot.place(0) == false then robot.place() end
 	end
-	
 	return swung
 end
 
@@ -806,12 +804,14 @@ function placeDown(blockName)
 			end
 		end
 	elseif blockName == "torch" then
-		torchI = 2
-		while torchI <=5 and robot.placeDown(torchI) == false do
-			torchI = torchI + 1
-		end
-		if torchI == 6 then
-			robot.placeDown()
+		if robot.placeDown(3) == false then
+			torchI = 2
+			while torchI <=5 and robot.placeDown(torchI) == false do
+				torchI = torchI + 1
+			end
+			if torchI == 6 then
+				robot.placeDown()
+			end
 		end
 	else
 		if robot.placeDown(0) == false then
