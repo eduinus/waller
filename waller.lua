@@ -24,6 +24,18 @@ function testLeft()
 	return leftPresent
 end
 
+function cleanOut(indice)
+	if component.inventory_controller.getStackInInternalSlot(indice) ~= nil then
+		if robot.drop() == false then
+			if robot.dropUp() == false then
+				if robot.dropDown() == false then
+					print("woopsie")	
+				end
+			end
+		end
+	end
+end
+
 function move()
 	swung = false
 	while robot.detect() do
@@ -663,6 +675,7 @@ function place(blockName)
 						print("Restocking "..itemArray[blocki][4]..".")
 						for stonei=itemArray[blocki][1], 16 do
 							robot.select(stonei)
+							cleanOut(stonei)
 							component.inventory_controller.suckFromSlot(3,9,64)
 							while component.inventory_controller.getSlotStackSize(3,9)<component.inventory_controller.getSlotMaxStackSize(3,9) do os.sleep(1) end
 						end
@@ -727,6 +740,7 @@ function placeUp(blockName)
   	        print("Restocking "..itemArray[blocki][4]..".")
   	        for stonei=itemArray[blocki][1], 16 do
   	          robot.select(stonei)
+		  cleanOut(stonei)
   	          while component.inventory_controller.getSlotStackSize(1,9)<component.inventory_controller.getSlotMaxStackSize(1,9) do os.sleep(1) end
   	          component.inventory_controller.suckFromSlot(1,9,64)
   	        end
@@ -787,6 +801,7 @@ function placeDown(blockName)
   	        print("Restocking "..itemArray[blocki][4]..".")
   	        for stonei=itemArray[blocki][1], 16 do
   	          robot.select(stonei)
+		  cleanOut(stonei)
   	          while component.inventory_controller.getSlotStackSize(0,9)<component.inventory_controller.getSlotMaxStackSize(0,9) do os.sleep(1) end
   	          component.inventory_controller.suckFromSlot(0,9,64)
   	        end
